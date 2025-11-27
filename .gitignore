@@ -1,0 +1,25 @@
+# Секреты и конфиги
+.env
+*.env
+config/secret*.json
+keys_*
+
+# Данные (часто большие и не нужны в git)
+*.csv
+*.xlsx
+*.parquet
+data/raw/
+data/processed/
+
+# Логи
+*.log
+*.txt
+logs/
+
+# Python
+__pycache__/
+*.pyc
+.python-version
+
+# Jupyter
+.ipynb_checkpoints/
