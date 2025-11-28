@@ -66,6 +66,8 @@ def main():
         print(f"Ошибка подключения к Supabase: {e}")
         return
 
+    ###########   Extraction   ###################
+
     print("Загружаем страны из World Bank API...")
     # подключаюсь к Всемирному Банку для загрузки данных по показателям
 
@@ -145,9 +147,47 @@ def main():
     values_loaded = len(df)
     print(f'Получено {values_loaded} значений')
 
+    ###############   Transormation   ################
+
     # преобразую формат года в число
     df['year'] = df['year'].astype('int64')
 
+    # перевожу значения % в десятичные дроби (нужно для корреляции)
+    ind_list = ['Access to electricity (% of population)', 'Urban population (% of total population)',
+                'Government expenditure on education, total (% of GDP)', 'Current health expenditure (% of GDP)',
+                'Individuals using the Internet (% of population)']
+    # делаю маску по нужным индикаторам
+    mask = df['indicator'].isin(ind_list)
+    # делю на 100, чтобы получить долю, а не процент
+    df.loc[mask, 'value'] = df.loc[mask, 'value'] / 100.0
+    df.loc[mask, 'value'].sample(10)
+
+    # создаю новый индикатор, расчитываю его значения на душу населения, добавляю строки в датафрейм
+    # ищу значения популяции для каждого года и страны
+    pop_data = df[df['indicator'] == 'Population, total'][['country', 'year', 'value']]
+    pop_data = pop_data.rename(columns={'value': 'population'})
+
+    # ищу значения научных статей для каждого года и страны
+    scy_art_data = df[df['indicator'] == 'Scientific and technical journal articles'][['country', 'year', 'value']]
+    scy_art_data = scy_art_data.rename(columns={'value': 'publication'})
+
+    # объединяю данные
+    merged_data = scy_art_data.merge(pop_data, on=['country', 'year'], how='inner')
+
+    # вычисляю кол-во публикаций на душу населения
+    merged_data['publication_per_capita'] = merged_data['publication'] / merged_data['population']
+
+    # создаю новые строки для добавления в основной датафрейм
+    new_rows = merged_data[['country', 'year']].copy()
+    new_rows['indicator'] = 'Sci. and tech. journal articles per capita'  # название нового индикатора
+    new_rows['value'] = merged_data['publication_per_capita']
+
+    # добавляю новые строки к датафрейму
+    df = pd.concat([df, new_rows], ignore_index=True)
+
+    print(f"Строк в датафрейме после трансформации: {len(df)}")
+
+    #############   Load   #######################
     print("Сохраняем данные в Supabase ...")
 
     try:
