@@ -4,16 +4,17 @@
 config/secret*.json
 keys_*
 
-# Данные (часто большие и не нужны в git)
+
+# Данные
 *.csv
 *.xlsx
 *.parquet
+*.txt
 data/raw/
 data/processed/
 
 # Логи
 *.log
-*.txt
 logs/
 
 # Python
