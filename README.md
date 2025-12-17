@@ -15,7 +15,7 @@
 ## Что сделано
 
 [Описание проекта](wb_project_description.ipynb) - тетрадка `jupyter notebook` с описанием проекта  
-[Анализ данных](wb_analysis.ipynb) - тетрадка `jupyter notebook` с анализом данных  
+[Анализ данных](wb_analysis.html) - тетрадка `jupyter notebook` с анализом данных (в формате html, чтобы plotly отображалось) 
 [Дашборд](https://datalens.yandex/0jtlj0h44hyal) - дашборд в Datalens
 
 ---
