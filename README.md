@@ -15,6 +15,9 @@
 ## Что сделано
 
 [Описание проекта](wb_project_description.ipynb) - тетрадка `jupyter notebook` с описанием проекта  
+[Страны](load_countries.py) - скрипт для загрузки данных о странах с сайта Всемирного банка в базу данных Supabase  
+[Индикаторы](load_indicators.py) - скрипт для загрузки данных о показателях с сайта Всемирного банка в базу данных Supabase  
+[Значения индикаторов](load_indicators_values.py) - скрипт для загрузки значений показателей с сайта Всемирного банка в базу данных Supabase  
 [Анализ данных](https://nbviewer.org/github/Zaytsev-V/etl_pipeline/blob/master/wb_analysis.ipynb) - тетрадка `jupyter notebook` с анализом данных (в формате html, чтобы plotly отображалось)  
 [Дашборд](https://datalens.yandex/0jtlj0h44hyal) - дашборд в Datalens
 
