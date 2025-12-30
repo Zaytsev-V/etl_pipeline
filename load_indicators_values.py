@@ -150,7 +150,7 @@ def main():
     ###############   Transormation   ################
 
     # преобразую формат года в число
-    df['year'] = df['year'].astype('int64')
+    df['year'] = df['year'].astype('int16')
 
     # перевожу значения % в десятичные дроби (нужно для корреляции)
     ind_list = ['Access to electricity (% of population)', 'Urban population (% of total population)',
@@ -160,7 +160,6 @@ def main():
     mask = df['indicator'].isin(ind_list)
     # делю на 100, чтобы получить долю, а не процент
     df.loc[mask, 'value'] = df.loc[mask, 'value'] / 100.0
-    df.loc[mask, 'value'].sample(10)
 
     # создаю новый индикатор, расчитываю его значения на душу населения, добавляю строки в датафрейм
     # ищу значения популяции для каждого года и страны

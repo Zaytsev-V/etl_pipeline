@@ -1,4 +1,3 @@
-# load_countries_fixed.py
 import requests
 import pandas as pd
 from sqlalchemy import create_engine, text
